@@ -71,7 +71,7 @@ resource "aws_iam_role" "dms_access_for_endpoint" {
 resource "aws_iam_role" "dms_cloudwatch_logs_role" {
   count = var.create && var.create_iam_roles ? 1 : 0
 
-  name                  = "dms-cloudwatch-logs-role"
+  name                  = "dms-cloudwatch-logs-role-tf"
   description           = "DMS IAM role for CloudWatch logs permissions"
   permissions_boundary  = var.iam_role_permissions_boundary
   assume_role_policy    = data.aws_iam_policy_document.dms_assume_role[0].json
@@ -85,7 +85,7 @@ resource "aws_iam_role" "dms_cloudwatch_logs_role" {
 resource "aws_iam_role" "dms_vpc_role" {
   count = var.create && var.create_iam_roles ? 1 : 0
 
-  name                  = "dms-vpc-role"
+  name                  = "dms-vpc-role-tf"
   description           = "DMS IAM role for VPC permissions"
   permissions_boundary  = var.iam_role_permissions_boundary
   assume_role_policy    = data.aws_iam_policy_document.dms_assume_role[0].json
