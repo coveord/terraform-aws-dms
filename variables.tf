@@ -11,6 +11,12 @@ variable "tags" {
 }
 
 # IAM roles
+variable "iam_roles_prefix" {
+  description = "Prefix to avoid clash in IAM roles in the same account but different region"
+  type        = string
+  default     = ""
+}
+
 variable "create_iam_roles" {
   description = "Determines whether the required [DMS IAM resources](https://docs.aws.amazon.com/dms/latest/userguide/CHAP_Security.html#CHAP_Security.APIRole) will be created"
   type        = bool
