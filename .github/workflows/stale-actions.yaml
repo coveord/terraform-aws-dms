@@ -3,11 +3,22 @@ on:
   schedule:
     - cron: '0 0 * * *'
 
+permissions:
+  contents: read
+
 jobs:
   stale:
+    permissions:
+      issues: write  # for actions/stale to close stale issues
+      pull-requests: write  # for actions/stale to close stale PRs
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/stale@v6
+      - name: Harden the runner (Audit all outbound calls)
+        uses: step-security/harden-runner@c6295a65d1254861815972266d5933fd6e532bdf # v2.11.1
+        with:
+          egress-policy: audit
+
+      - uses: actions/stale@5ebf00ea0e4c1561e9b43a292ed34424fb1d4578 # v6.0.1
         with:
           repo-token: ${{ secrets.GITHUB_TOKEN }}
           # Staling issues and PR's
