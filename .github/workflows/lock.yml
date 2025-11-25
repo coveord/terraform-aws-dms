@@ -4,11 +4,22 @@ on:
   schedule:
     - cron: '50 1 * * *'
 
+permissions:
+  contents: read
+
 jobs:
   lock:
+    permissions:
+      issues: write  # for dessant/lock-threads to lock issues
+      pull-requests: write  # for dessant/lock-threads to lock PRs
     runs-on: ubuntu-latest
     steps:
-      - uses: dessant/lock-threads@v4
+      - name: Harden the runner (Audit all outbound calls)
+        uses: step-security/harden-runner@c6295a65d1254861815972266d5933fd6e532bdf # v2.11.1
+        with:
+          egress-policy: audit
+
+      - uses: dessant/lock-threads@be8aa5be94131386884a6da4189effda9b14aa21 # v4.0.1
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           issue-comment: >
