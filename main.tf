@@ -18,7 +18,7 @@ locals {
 ################################################################################
 
 data "aws_iam_policy_document" "dms_assume_role" {
-  count = var.create && var.create_iam_roles ? 1 : 0
+  count = var.create_iam_roles ? 1 : 0
 
   statement {
     actions = [
@@ -47,7 +47,7 @@ data "aws_iam_policy_document" "dms_assume_role" {
 }
 
 data "aws_iam_policy_document" "dms_assume_role_redshift" {
-  count = var.create && var.create_iam_roles ? 1 : 0
+  count = var.create_iam_roles ? 1 : 0
 
   source_policy_documents = [data.aws_iam_policy_document.dms_assume_role[0].json]
 
@@ -78,7 +78,7 @@ resource "time_sleep" "wait_for_dependency_resources" {
 
 # DMS Endpoint
 resource "aws_iam_role" "dms_access_for_endpoint" {
-  count = var.create && var.create_iam_roles ? 1 : 0
+  count = var.create_iam_roles ? 1 : 0
 
   name                  = "dms-access-for-endpoint"
   description           = "DMS IAM role for endpoint access permissions"
@@ -92,7 +92,7 @@ resource "aws_iam_role" "dms_access_for_endpoint" {
 
 # DMS CloudWatch Logs
 resource "aws_iam_role" "dms_cloudwatch_logs_role" {
-  count = var.create && var.create_iam_roles ? 1 : 0
+  count = var.create_iam_roles ? 1 : 0
 
   name                  = "dms-cloudwatch-logs-role"
   description           = "DMS IAM role for CloudWatch logs permissions"
@@ -106,7 +106,7 @@ resource "aws_iam_role" "dms_cloudwatch_logs_role" {
 
 # DMS VPC
 resource "aws_iam_role" "dms_vpc_role" {
-  count = var.create && var.create_iam_roles ? 1 : 0
+  count = var.create_iam_roles ? 1 : 0
 
   name                  = "dms-vpc-role"
   description           = "DMS IAM role for VPC permissions"
